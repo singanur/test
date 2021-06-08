@@ -1,0 +1,2223 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Swagger API
+  contact: {}
+host: 192.168.57.9:8980
+basePath: /ysl
+schemes:
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /{cobrandName}/v1/providerAccounts/verification:
+    put:
+      description: Verification Service
+      summary: processCDV
+      operationId: processCDV
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: verificationParam
+        in: body
+        required: false
+        description: verification information
+        schema:
+          type: object
+      responses:
+        '400':
+          description: 'Y901 : Service not supported'
+          headers: {}
+      security: []
+      tags: 
+      - "ProviderAccounts"
+  /{cobrandName}/v1/providerAccounts/verification/{providerAccountId}:
+    get:
+      description: Get verification status
+      summary: getVerificationStatus
+      operationId: getVerificationStatus
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: providerAccountId
+        in: path
+        required: true
+        type: string
+        description: providerAccountId
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for providerAccountId'
+          headers: {}
+      security: []
+      tags: 
+      - "ProviderAccounts"
+  /{cobrandName}/v1/providerAccounts:
+    put:
+      description: Update Provider Account
+      summary: updateProviderAccount
+      operationId: updateProviderAccount
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: credentialsParam
+        in: body
+        required: false
+        description: credentials/MFA information
+        schema:
+          type: object
+      - name: providerAccountIds
+        in: query
+        required: true
+        type: string
+        description: comma separated providerAccountIds
+      responses:
+        '400':
+          description: 'Y805 : Multiple providerAccountId not supported for updating credentials'
+          headers: {}
+      security: []
+      tags: 
+      - "ProviderAccounts"
+    get:
+      description: Get Provider Accounts
+      summary: getProviderAccount
+      operationId: getProviderAccount
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags: 
+      - "ProviderAccounts"
+    post:
+      description: Add Account
+      summary: newAddAccount
+      operationId: newAddAccount
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: credentialsParam
+        in: body
+        required: false
+        description: loginForm/field (Mandatory)
+        schema:
+          type: object
+      - name: providerId
+        in: query
+        required: true
+        type: string
+        description: providerId
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags: 
+      - "ProviderAccounts"
+  /{cobrandName}/v1/providerAccounts/{providerAccountId}:
+    delete:
+      description: Delete Provider Account
+      summary: deleteAccount
+      operationId: deleteAccount
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: providerAccountId
+        in: path
+        required: true
+        type: string
+        description: providerAccountId
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for providerAccountId'
+          headers: {}
+      security: []
+      tags: 
+      - "ProviderAccounts"
+    get:
+      description: Get Provider Account Details
+      summary: getRefreshForProviderAccount
+      operationId: getRefreshForProviderAccount
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: providerAccountId
+        in: path
+        required: true
+        type: string
+        description: providerAccountId
+      - name: include
+        in: query
+        required: false
+        type: string
+        description: credentials
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for providerAccountId'
+          headers: {}
+      security: []
+      tags: 
+      - "ProviderAccounts"
+  /{cobrandName}/v1/holdings:
+    get:
+      description: Get Holdings
+      summary: getHoldings
+      operationId: getHoldings
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: <s>holdingType</s>
+        in: query
+        required: false
+        type: string
+        description: stock,bond,mutualFund, etc.(Deprecated)
+      - name: accountId
+        in: query
+        required: false
+        type: string
+        description: Comma separated accountId
+      - name: include
+        in: query
+        required: false
+        type: string
+        description: assetClassification
+      - name: providerAccountId
+        in: query
+        required: false
+        type: string
+        description: providerAccountId
+      - name: assetClassification.classificationType
+        in: query
+        required: false
+        type: string
+        description: e.g. Country, Sector, etc.
+      - name: classificationValue
+        in: query
+        required: false
+        type: string
+        description: e.g. US
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for accountId'
+          headers: {}
+      security: []
+      tags:
+      - "Holdings"
+  /{cobrandName}/v1/holdings/securities:
+    get:
+      description: Get Extended Securities Info
+      summary: getExtendedSecuritiesInfo
+      operationId: getExtendedSecuritiesInfo
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: holdingId
+        in: query
+        required: false
+        type: string
+        description: Comma separated holdingId
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for holdingId'
+          headers: {}
+      security: []
+      tags:
+      - "Holdings"
+  /{cobrandName}/v1/holdings/holdingTypeList:
+    get:
+      description: Get Holding Type List
+      summary: getHoldingTypes
+      operationId: getHoldingTypes
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "Holdings"
+  /{cobrandName}/v1/holdings/assetClassificationList:
+    get:
+      description: Get Asset Classification List
+      summary: getAssetClassifications
+      operationId: getAssetClassifications
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "Holdings"
+  /{cobrandName}/v1/derived/transactionSummary:
+    get:
+      description: Get Transaction Summary
+      summary: getTransactionSummary
+      operationId: getTransactionSummary
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: accountId
+        in: query
+        required: false
+        type: string
+        description: comma separated account Ids
+      - name: groupBy
+        in: query
+        required: true
+        type: string
+        description: CATEGORY_TYPE, HIGH_LEVEL_CATEGORY or CATEGORY
+      - name: categoryType
+        in: query
+        required: false
+        type: string
+        description: INCOME, EXPENSE, TRANSFER, UNCATEGORIZE or DEFERRED_COMPENSATION
+      - name: categoryId
+        in: query
+        required: false
+        type: string
+        description: comma separated categoryIds
+      - name: fromDate
+        in: query
+        required: false
+        type: string
+        description: YYYY-MM-DD format
+      - name: toDate
+        in: query
+        required: false
+        type: string
+        description: YYYY-MM-DD format
+      - name: interval
+        in: query
+        required: false
+        type: string
+        description: D-daily, W-weekly, M-mothly or Y-yearly
+      - name: include
+        in: query
+        required: false
+        type: string
+        description: details
+      - name: includeUserCategory
+        in: query
+        required: false
+        type: string
+        description: TRUE/FALSE
+      responses:
+        '400':
+          description: 'Y010 : Invalid session'
+          headers: {}
+      security: []
+      tags:
+      - "Derived"
+  /{cobrandName}/v1/derived/holdingSummary:
+    get:
+      description: Get Holding Summary
+      summary: getAssetClassificationSummary
+      operationId: getAssetClassificationSummary
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: include
+        in: query
+        required: false
+        type: string
+        description: details
+      - name: accountIds
+        in: query
+        required: false
+        type: string
+        description: Comma separated accountIds
+      - name: classificationType
+        in: query
+        required: false
+        type: string
+        description: e.g. Country, Sector, etc.
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for classificationType'
+          headers: {}
+      security: []
+      tags:
+      - "Derived"
+  /{cobrandName}/v1/derived/networth:
+    get:
+      description: Get Networth Summary
+      summary: getNetworthSummary
+      operationId: getNetworthSummary
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: accountIds
+        in: query
+        required: false
+        type: string
+        description: comma separated accountIds
+      - name: include
+        in: query
+        required: false
+        type: string
+        description: details
+      - name: fromDate
+        in: query
+        required: false
+        type: string
+        description: from date for balance retrieval (YYYY-MM-DD)
+      - name: toDate
+        in: query
+        required: false
+        type: string
+        description: toDate for balance retrieval (YYYY-MM-DD)
+      - name: interval
+        in: query
+        required: false
+        type: string
+        description: D-daily, W-weekly or M-monthly
+      - name: skip
+        in: query
+        required: false
+        type: string
+        description: skip (Min 0)
+      - name: top
+        in: query
+        required: false
+        type: string
+        description: top (Max 500)
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for accountIds'
+          headers: {}
+      security: []
+      tags:
+      - "Derived"
+  /{cobrandName}/v1/dataExtracts/events:
+    get:
+      description: Get Events
+      summary: getPollingData
+      operationId: getPollingData
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: Cobrand Name
+      - name: eventName
+        in: query
+        required: true
+        type: string
+        description: Event Name
+      - name: fromDate
+        in: query
+        required: true
+        type: string
+        description: From DateTime (YYYY-MM-DDThh:mm:ssZ)
+      - name: toDate
+        in: query
+        required: true
+        type: string
+        description: To DateTime (YYYY-MM-DDThh:mm:ssZ))
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for fromDate.fromDate cannot be greater than current time'
+          headers: {}
+      security: []
+      tags:
+      - "DataExtracts"
+  /{cobrandName}/v1/dataExtracts/userData:
+    get:
+      description: Get userData
+      summary: getUserData
+      operationId: getUserData
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: loginName
+        in: query
+        required: true
+        type: string
+        description: Login Name
+      - name: fromDate
+        in: query
+        required: true
+        type: string
+        description: From DateTime (YYYY-MM-DDThh:mm:ssZ)
+      - name: toDate
+        in: query
+        required: true
+        type: string
+        description: To DateTime (YYYY-MM-DDThh:mm:ssZ)
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for eventName'
+          headers: {}
+      security: []
+      tags:
+      - "DataExtracts"
+  /{cobrandName}/v1/cobrand/config/notifications/events:
+    get:
+      description: Get Subscribed Events
+      summary: subscriptionDetails
+      operationId: subscriptionDetails
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: eventName
+        in: query
+        required: false
+        type: string
+        description: eventName
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "Cobrand"
+  /{cobrandName}/v1/cobrand/config/notifications/events/{eventName}:
+    put:
+      description: Update Subscription
+      summary: updateSubscription
+      operationId: updateSubscription
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: eventName
+        in: path
+        required: true
+        type: string
+        description: eventName
+      - name: eventParam
+        in: body
+        required: true
+        description: eventParam
+        schema:
+          type: object
+      responses:
+        '400':
+          description: 'Y803 : callbackUrl required'
+          headers: {}
+      security: []
+      tags:
+      - "Cobrand"
+    delete:
+      description: Delete Subscription
+      summary: deleteSubscription
+      operationId: deleteSubscription
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: eventName
+        in: path
+        required: true
+        type: string
+        description: eventName
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "Cobrand"
+    post:
+      description: Subscribe Event
+      summary: eventSubscription
+      operationId: eventSubscription
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: eventName
+        in: path
+        required: true
+        type: string
+        description: eventName
+      - name: eventParam
+        in: body
+        required: true
+        description: eventParam
+        schema:
+          type: object
+      responses:
+        '400':
+          description: 'Y803 : callbackUrl required'
+          headers: {}
+      security: []
+      tags:
+      - "Cobrand"
+  /{cobrandName}/v1/cobrand/login:
+    post:
+      description: Cobrand Login
+      summary: authenticateCoBrand
+      operationId: authenticateCoBrand
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: cobrandParam
+        in: body
+        required: true
+        description: cobrandParam
+        schema:
+          type: object
+      responses:
+        '401':
+          description: 'Y003 : Account is locked, contact Yodlee customer care'
+          headers: {}
+        '400':
+          description: 'Y800 : Invalid value for cobrandParam'
+          headers: {}
+      security: []
+      tags:
+      - "Cobrand"
+  /{cobrandName}/v1/cobrand/logout:
+    post:
+      description: Cobrand Logout
+      summary: logoutCoBrand
+      operationId: logoutCoBrand
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "Cobrand"
+  /{cobrandName}/v1/cobrand/publicKey:
+    get:
+      description: Get Public Key
+      summary: publicKey
+      operationId: publicKey
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "Cobrand"
+  /{cobrandName}/v1/auth/token:
+    delete:
+      description: Delete Token
+      summary: deleteAuthToken
+      operationId: deleteAuthToken
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: ''
+      responses:
+        '401':
+          description: 'Y020 : Invalid token in authorization header'
+          headers: {}
+      security: []
+      tags:
+      - "Auth"
+  /{cobrandName}/v1/accounts/{accountId}:
+    post:
+      description: Update Account Status
+      summary: updateAccount
+      operationId: updateAccount
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: accountId
+        in: path
+        required: true
+        type: string
+        description: accountId
+      - name: status
+        in: query
+        required: true
+        type: string
+        description: ACTIVE/INACTIVE/CLOSED
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for accountId'
+          headers: {}
+      security: []
+      tags:
+      - "Accounts"
+    get:
+      description: Get Account Details
+      summary: getAccountDetails
+      operationId: getAccountDetails
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: accountId
+        in: path
+        required: true
+        type: string
+        description: accountId
+      - name: container
+        in: query
+        required: true
+        type: string
+        description: bank/creditCard/investment/insurance/loan/reward/bill/realEstate/otherAssets/otherLiabilities
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for container'
+          headers: {}
+      security: []
+      tags:
+      - "Accounts"
+    put:
+      description: Update Account
+      summary: updateManualAccount
+      operationId: updateManualAccount
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: accountId
+        in: path
+        required: true
+        type: string
+        description: accountId
+      - name: updateParam
+        in: body
+        required: true
+        description: updateParam
+        schema:
+          type: object
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for accountId'
+          headers: {}
+      security: []
+      tags:
+      - "Accounts"
+    delete:
+      description: Delete Account
+      summary: deleteAccountDetail
+      operationId: deleteAccountDetail
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: accountId
+        in: path
+        required: true
+        type: string
+        description: accountId
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for accountId'
+          headers: {}
+      security: []
+      tags:
+      - "Accounts"
+  /{cobrandName}/v1/accounts:
+    post:
+      description: Add Manual Account
+      summary: addManualAccount
+      operationId: addManualAccount
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: accountParam
+        in: body
+        required: true
+        description: Manual Account  in JSON format
+        schema:
+          type: object
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for accountParam'
+          headers: {}
+      security: []
+      tags:
+      - "Accounts"
+    get:
+      description: Get Accounts
+      summary: getAccounts
+      operationId: getAccounts
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: status
+        in: query
+        required: false
+        type: string
+        description: ACTIVE/INACTIVE/TO_BE_CLOSED/CLOSED
+      - name: container
+        in: query
+        required: false
+        type: string
+        description: bank/creditCard/investment/insurance/loan/reward/bill/realEstate/otherAssets/otherLiabilities
+      - name: providerAccountId
+        in: query
+        required: false
+        type: string
+        description: providerAccountId
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for status'
+          headers: {}
+      security: []
+      tags:
+      - "Accounts"
+  /{cobrandName}/v1/accounts/investmentPlan/investmentOptions:
+    get:
+      description: Get Investment Options
+      summary: getPlan
+      operationId: getPlan
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: accountId
+        in: query
+        required: false
+        type: string
+        description: accountId
+      - name: include
+        in: query
+        required: false
+        type: string
+        description: assetClassification
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "Accounts"
+  /{cobrandName}/v1/accounts/historicalBalances:
+    get:
+      description: Get Historical Balances
+      summary: getHistoricalBalances
+      operationId: getHistoricalBalances
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: accountId
+        in: query
+        required: false
+        type: string
+        description: accountId
+      - name: includeCF
+        in: query
+        required: false
+        type: string
+        description: Consider carry forward logic for missing balances
+      - name: fromDate
+        in: query
+        required: false
+        type: string
+        description: from date for balance retrieval (YYYY-MM-DD)
+      - name: toDate
+        in: query
+        required: false
+        type: string
+        description: toDate for balance retrieval (YYYY-MM-DD)
+      - name: interval
+        in: query
+        required: false
+        type: string
+        description: D-daily, W-weekly or M-monthly
+      - name: skip
+        in: query
+        required: false
+        type: string
+        description: skip (Min 0)
+      - name: top
+        in: query
+        required: false
+        type: string
+        description: top (Max 500)
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for accountId'
+          headers: {}
+      security: []
+      tags:
+      - "Accounts"
+  /{cobrandName}/v1/user/logout:
+    post:
+      description: User Logout
+      summary: logoutUser
+      operationId: logoutUser
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "User"
+  /{cobrandName}/v1/user/login:
+    post:
+      description: User Login
+      summary: authenticateUser
+      operationId: authenticateUser
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: userParam
+        in: body
+        required: false
+        description: userParam(Mandatory)
+        schema:
+          type: object
+      responses:
+        '401':
+          description: 'Y002 : Invalid loginName/password'
+          headers: {}
+        '400':
+          description: 'Y826 : Query parameter(s) loginName and password have been deprecated; support for them is only available through body parameters'
+          headers: {}
+      security: []
+      tags:
+      - "User"
+  /{cobrandName}/v1/user:
+    put:
+      description: Update User Details
+      summary: updateUser
+      operationId: updateUser
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: userParam
+        in: body
+        required: true
+        description: userParam
+        schema:
+          type: object
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "User"
+    get:
+      description: Get User Details
+      summary: userInfo
+      operationId: userInfo
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "User"
+  /{cobrandName}/v1/user/samlLogin:
+    post:
+      description: Saml Login
+      summary: samlLogin
+      operationId: samlLogin
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: samlResponse
+        in: query
+        required: true
+        type: string
+        description: samlResponse
+      - name: issuer
+        in: query
+        required: true
+        type: string
+        description: issuer
+      - name: source
+        in: query
+        required: true
+        type: string
+        description: source
+      responses:
+        '400':
+          description: 'Y013 : Invalid value for samlResponse'
+          headers: {}
+      security: []
+      tags:
+      - "User"
+  /{cobrandName}/v1/user/accessTokens:
+    get:
+      description: Get Access Tokens
+      summary: getAccessTokens
+      operationId: getAccessTokens
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: appIds
+        in: query
+        required: true
+        type: string
+        description: Comma separated appIds
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "User"
+  /{cobrandName}/v1/user/credentials:
+    post:
+      description: Update Password
+      summary: updateCredentials
+      operationId: updateCredentials
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: credentialsParam
+        in: body
+        required: false
+        description: credentialsParam(Mandatory)
+        schema:
+          type: object
+      responses:
+        '400':
+          description: 'Y803 : loginName required'
+          headers: {}
+        '401':
+          description: 'Y002 : Invalid loginName'
+          headers: {}
+      security: []
+      tags:
+      - "User"
+  /{cobrandName}/v1/user/credentials/token:
+    get:
+      description: Get User Credentials Token
+      summary: getUserCredentialsToken
+      operationId: getUserCredentialsToken
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: loginName
+        in: query
+        required: true
+        type: string
+        description: loginName
+      responses:
+        '400':
+          description: 'Y803 : loginName required'
+          headers: {}
+        '401':
+          description: 'Y002 : Invalid loginName'
+          headers: {}
+      security: []
+      tags:
+      - "User"
+  /{cobrandName}/v1/user/unregister:
+    delete:
+      description: Delete User
+      summary: unregister
+      operationId: unregister
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "User"
+  /{cobrandName}/v1/user/register:
+    post:
+      description: Register User
+      summary: register
+      operationId: register
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: userParam
+        in: body
+        required: false
+        description: user profile information in JSON format(Mandatory)
+        schema:
+          type: object
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for loginName'
+          headers: {}
+      security: []
+      tags:
+      - "User"
+  /{cobrandName}/v1/transactions/count:
+    get:
+      description: Get Transactions Count
+      summary: getTransactionCount
+      operationId: getTransactionCount
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: container
+        in: query
+        required: false
+        type: string
+        description: bank/creditCard/investment/insurance/loan
+      - name: baseType
+        in: query
+        required: false
+        type: string
+        description: DEBIT/CREDIT
+      - name: keyword
+        in: query
+        required: false
+        type: string
+        description: Transaction search text
+      - name: accountId
+        in: query
+        required: false
+        type: string
+        description: Comma separated accountIds
+      - name: fromDate
+        in: query
+        required: false
+        type: string
+        description: Transaction from date(YYYY-MM-DD)
+      - name: toDate
+        in: query
+        required: false
+        type: string
+        description: Transaction end date (YYYY-MM-DD)
+      - name: <s>category</s>
+        in: query
+        required: false
+        type: string
+        description: Comma separated category (Deprecated)
+      - name: categoryId
+        in: query
+        required: false
+        type: string
+        description: Comma separated categoryIds
+      - name: highLevelCategoryId
+        in: query
+        required: false
+        type: string
+        description: Comma separated highLevelCategoryIds
+      - name: type
+        in: query
+        required: false
+        type: string
+        description: Transaction Type(SELL,SWEEP, etc.)
+      - name: categoryType
+        in: query
+        required: false
+        type: string
+        description: Transaction Category Type(UNCATEGORIZE, INCOME, TRANSFER, EXPENSE or DEFERRED_COMPENSATION)
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "Transactions"
+  /{cobrandName}/v1/transactions/categories/rules:
+    get:
+      description: Get Transaction Categorization Rules
+      summary: getTransactionCategorizationRules
+      operationId: getTransactionCategorizationRules
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "Transactions"
+    post:
+      description: Create Transaction Categorization Rule
+      summary: createTransactionCategorizationRule
+      operationId: createTransactionCategorizationRule
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: ruleParam
+        in: query
+        required: true
+        type: string
+        description: rules(JSON format) to categorize the transactions
+      responses:
+        '400':
+          description: 'Y806 : Invalid input'
+          headers: {}
+      security: []
+      tags:
+      - "Transactions"
+  /{cobrandName}/v1/transactions/categories/rules/{ruleId}:
+    put:
+      description: Update Transaction Categorization Rules
+      summary: updateTransactionCategorizationRule
+      operationId: updateTransactionCategorizationRule
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: ruleId
+        in: path
+        required: true
+        type: string
+        description: Unique id of the categorization rule
+      - name: ruleParam
+        in: body
+        required: true
+        description: rules(JSON format) to categorize the transactions
+        schema:
+          type: object
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for ruleId'
+          headers: {}
+      security: []
+      tags:
+      - "Transactions"
+    delete:
+      description: Delete Transaction Categorization Rule
+      summary: deleteTransactionCategorizationRule
+      operationId: deleteTransactionCategorizationRule
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: ruleId
+        in: path
+        required: true
+        type: string
+        description: Unique id of the categorization rule
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for ruleId'
+          headers: {}
+      security: []
+      tags:
+      - "Transactions"
+    post:
+      description: Run Transaction Categorization Rule
+      summary: runTransactionCategorizationRule
+      operationId: runTransactionCategorizationRule
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: ruleId
+        in: path
+        required: true
+        type: string
+        description: Unique id of the categorization rule
+      - name: action
+        in: query
+        required: true
+        enum:
+        - run
+        type: string
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for ruleId'
+          headers: {}
+      security: []
+      tags:
+      - "Transactions"
+  /{cobrandName}/v1/transactions/categories/{categoryId}:
+    delete:
+      description: Delete Category
+      summary: deleteSubCategory
+      operationId: deleteSubCategory
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: categoryId
+        in: path
+        required: true
+        type: string
+        description: User Category id
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for categoryId'
+          headers: {}
+      security: []
+      tags:
+      - "Transactions"
+  /{cobrandName}/v1/transactions/{transactionId}:
+    post:
+      description: Update Transaction Category
+      summary: updateTransaction
+      operationId: updateTransaction
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: transactionId
+        in: path
+        required: true
+        type: string
+        description: transactionId
+      - name: container
+        in: query
+        required: true
+        type: string
+        description: bank/creditCard/investment/insurance/loan
+      - name: categoryName
+        in: query
+        required: true
+        type: string
+        description: ATM/cash withdrawals,checks,interest, etc.
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for container'
+          headers: {}
+      security: []
+      tags:
+      - "Transactions"
+    put:
+      description: Update Transaction
+      summary: updateTransactions
+      operationId: updateTransactions
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: transactionId
+        in: path
+        required: true
+        type: string
+        description: transactionId
+      - name: transactionParam
+        in: body
+        required: true
+        description: Transaction in JSON format
+        schema:
+          type: object
+      responses:
+        '400':
+          description: 'Y812 : Required field -container missing in the transactionParam parameter input'
+          headers: {}
+      security: []
+      tags:
+      - "Transactions"
+  /{cobrandName}/v1/transactions/categories:
+    get:
+      description: Get Transaction Category List
+      summary: getTransactionCategories
+      operationId: getTransactionCategories
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "Transactions"
+    post:
+      description: Create Category
+      summary: createSubCategory
+      operationId: createSubCategory
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: categoryParam
+        in: query
+        required: true
+        type: string
+        description: User Transaction Category in JSON format
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for categoryParam'
+          headers: {}
+      security: []
+      tags:
+      - "Transactions"
+    put:
+      description: Update Category
+      summary: updateSubCategory
+      operationId: updateSubCategory
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: categoryParam
+        in: body
+        required: true
+        description: User Transaction Category in JSON format
+        schema:
+          type: object
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for categoryParam'
+          headers: {}
+      security: []
+      tags:
+      - "Transactions"
+  /{cobrandName}/v1/transactions:
+    get:
+      description: Get Transactions
+      summary: getTransactions
+      operationId: getTransactions
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: container
+        in: query
+        required: false
+        type: string
+        description: bank/creditCard/investment/insurance/loan
+      - name: baseType
+        in: query
+        required: false
+        type: string
+        description: DEBIT/CREDIT
+      - name: keyword
+        in: query
+        required: false
+        type: string
+        description: Transaction search text
+      - name: accountId
+        in: query
+        required: false
+        type: string
+        description: Comma separated accountIds
+      - name: fromDate
+        in: query
+        required: false
+        type: string
+        description: Transaction from date(YYYY-MM-DD)
+      - name: toDate
+        in: query
+        required: false
+        type: string
+        description: Transaction end date (YYYY-MM-DD)
+      - name: <s>category</s>
+        in: query
+        required: false
+        type: string
+        description: Advertising,cash withdrawal,dining, etc.(Deprecated)
+      - name: categoryId
+        in: query
+        required: false
+        type: string
+        description: Comma separated categoryIds
+      - name: highLevelCategoryId
+        in: query
+        required: false
+        type: string
+        description: Comma separated highLevelCategoryIds
+      - name: type
+        in: query
+        required: false
+        type: string
+        description: Transaction Type(SELL,SWEEP, etc.) for bank/creditCard/investment
+      - name: categoryType
+        in: query
+        required: false
+        type: string
+        description: Transaction Category Type(UNCATEGORIZE, INCOME, TRANSFER, EXPENSE or DEFERRED_COMPENSATION)
+      - name: skip
+        in: query
+        required: false
+        type: string
+        description: skip (Min 1)
+      - name: top
+        in: query
+        required: false
+        type: string
+        description: top (Max 500)
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for baseType'
+          headers: {}
+      security: []
+      tags:
+      - "Transactions"
+  /{cobrandName}/v1/statements:
+    get:
+      description: Get Statements
+      summary: getStatements
+      operationId: getStatements
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: accountId
+        in: query
+        required: false
+        type: string
+        description: accountId
+      - name: container
+        in: query
+        required: false
+        type: string
+        description: creditCard/loan/bill/insurance
+      - name: isLatest
+        in: query
+        required: false
+        type: string
+        description: isLatest (true/false)
+      - name: status
+        in: query
+        required: false
+        type: string
+        description: ACTIVE/TO_BE_CLOSED/CLOSED
+      - name: fromDate
+        in: query
+        required: false
+        type: string
+        description: from date for statement retrieval (YYYY-MM-DD)
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for accountId'
+          headers: {}
+      security: []
+      tags:
+      - "Statements"
+  /{cobrandName}/v1/refresh:
+    post:
+      description: Refresh Multiple Accounts
+      summary: refreshMultipleSites
+      operationId: refreshMultipleSites
+      deprecated: true
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: accountIds
+        in: query
+        required: true
+        type: string
+        description: comma separated accountIds
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for accountIds'
+          headers: {}
+      security: []
+      tags:
+      - "Refresh"
+    get:
+      description: Get Refresh Status
+      summary: refreshAccountsOrSites
+      operationId: refreshAccountsOrSites
+      deprecated: true
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: accountIds
+        in: query
+        required: true
+        type: string
+        description: comma separated accountIds
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for accountIds'
+          headers: {}
+      security: []
+      tags:
+      - "Refresh"
+  /{cobrandName}/v1/refresh/{providerAccountId}:
+    get:
+      description: Get Add Account Status
+      summary: refreshSiteInfo
+      operationId: refreshSiteInfo
+      deprecated: true
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: providerAccountId
+        in: path
+        required: true
+        type: string
+        description: providerAccountId
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for providerAccountId'
+          headers: {}
+      security: []
+      tags:
+      - "Refresh"
+  /{cobrandName}/v1/providers/{providerId}:
+    post:
+      description: Add Account
+      summary: siteAccount
+      operationId: siteAccount
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: providerParam
+        in: body
+        required: false
+        description: Provider information in JSON format
+        schema:
+          type: object
+      - name: providerId
+        in: path
+        required: true
+        type: string
+        description: providerId
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "Providers"
+    get:
+      description: Get Provider Details
+      summary: getSiteDetail
+      operationId: getSiteDetail
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: providerId
+        in: path
+        required: true
+        type: string
+        description: providerId
+      - name: providerAccountId
+        in: query
+        required: false
+        type: string
+        description: providerAccountId
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for providerId'
+          headers: {}
+      security: []
+      tags:
+      - "Providers"
+  /{cobrandName}/v1/providers/{providerAccountId}:
+    put:
+      description: Update Account
+      summary: siteUpdateAccount
+      operationId: siteUpdateAccount
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: providerParam
+        in: query
+        required: false
+        type: string
+        description: Provider information in JSON format
+      - name: MFAChallenge
+        in: query
+        required: false
+        type: string
+        description: Token,question & answer,image
+      - name: providerAccountId
+        in: path
+        required: true
+        type: string
+        description: providerAccountId
+      responses:
+        '400':
+          description: 'Y803 : MFAChallenge or providerParam required'
+          headers: {}
+      security: []
+      tags:
+      - "Providers"
+  /{cobrandName}/v1/providers:
+    get:
+      description: Get Providers
+      summary: getSuggestedSiteDetail
+      operationId: getSuggestedSiteDetail
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      - name: priority
+        in: query
+        required: false
+        type: string
+        description: Search priority
+      - name: capability
+        in: query
+        required: false
+        type: string
+        description: CHALLENGE_DEPOSIT_VERIFICATION
+      - name: additionalDataSet
+        in: query
+        required: false
+        type: string
+        description: Optional comma separated values - ACCT_PROFILE.FULL_ACCT_NUMBER or ACCT_PROFILE.BANK_TRANSFER_CODE or ACCT_PROFILE.HOLDER_NAME
+      - name: name
+        in: query
+        required: false
+        type: string
+        description: name(Min 3 Characters), URL, routing number.
+      - name: skip
+        in: query
+        required: false
+        type: string
+        description: skip (Min 1) - This is not applicable along with 'name' parameter.
+      - name: top
+        in: query
+        required: false
+        type: string
+        description: top (Max 500) - This is not applicable along with 'name' parameter.
+      responses:
+        '400':
+          description: 'Y800 : Invalid value for priority'
+          headers: {}
+      security: []
+      tags:
+      - "Providers"
+  /{cobrandName}/v1/providers/token:
+    get:
+      description: Get Token
+      summary: getToken
+      operationId: getToken
+      deprecated: false
+      produces:
+      - application/json
+      parameters:
+      - name: cobrandName
+        in: path
+        required: true
+        type: string
+        description: cobrandName
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      security: []
+      tags:
+      - "Providers"
+definitions:
+  MediaType:
+    title: MediaType
+    type: object
+    properties:
+      charSet:
+        $ref: '#/definitions/Charset'
+      subtype:
+        type: string
+      wildcardSubtype:
+        type: boolean
+      wildcardType:
+        type: boolean
+      parameters:
+        $ref: '#/definitions/Map%5BString%2CString%5D'
+      type:
+        type: string
+      concrete:
+        type: boolean
+      qualityValue:
+        type: object
+  Charset:
+    title: Charset
+    type: object
+    properties:
+      registered:
+        type: boolean
+  HttpHeaders:
+    title: HttpHeaders
+    type: object
+    properties:
+      connection:
+        type: array
+        items:
+          type: string
+      allow:
+        type: array
+        items:
+          type: object
+      lastModified:
+        type: object
+      location:
+        $ref: '#/definitions/URI'
+      ifNoneMatch:
+        type: array
+        items:
+          type: string
+      accept:
+        type: array
+        items:
+          $ref: '#/definitions/MediaType'
+      origin:
+        type: string
+      ifModifiedSince:
+        type: object
+      contentType:
+        $ref: '#/definitions/MediaType'
+      date:
+        type: object
+      cacheControl:
+        type: string
+      pragma:
+        type: string
+      upgrade:
+        type: string
+      expires:
+        type: object
+      ifNotModifiedSince:
+        type: object
+      acceptCharset:
+        type: array
+        items:
+          $ref: '#/definitions/Charset'
+      empty:
+        type: boolean
+      contentLength:
+        type: object
+  ResponseEntity[String]:
+    title: ResponseEntity[String]
+    type: object
+    properties:
+      headers:
+        $ref: '#/definitions/HttpHeaders'
+      statusCode:
+        type: object
+      body:
+        type: string
+  Map[String,String]:
+    title: Map[String,String]
+    type: object
+    properties:
+      empty:
+        type: boolean
+  URI:
+    title: URI
+    type: object
+    properties:
+      port:
+        type: object
+      rawAuthority:
+        type: string
+      host:
+        type: string
+      query:
+        type: string
+      rawQuery:
+        type: string
+      schemeSpecificPart:
+        type: string
+      rawSchemeSpecificPart:
+        type: string
+      absolute:
+        type: boolean
+      authority:
+        type: string
+      scheme:
+        type: string
+      opaque:
+        type: boolean
+      rawFragment:
+        type: string
+      path:
+        type: string
+      rawUserInfo:
+        type: string
+      userInfo:
+        type: string
+      fragment:
+        type: string
+      rawPath:
+        type: string
+  Session:
+    title: Session
+    type: object
+    properties:
+      externalSessionID:
+        type: string
+  CoBrandContext:
+    title: CoBrandContext
+    type: object
+    properties:
+      session:
+        $ref: '#/definitions/Session'
+      locale:
+        type: string
+      applicationId:
+        type: string
+      cobrandId:
+        type: object
+tags:
+- name: "Accounts"
+  description: "Accounts API"
+- name: "Auth"
+  description: "Auth API"
+- name: "Cobrand"
+  description: "Cobrand API"
+- name: "DataExtracts"
+  description: "DataExtracts API"
+- name: "Derived"
+  description: "Derived API"
+- name: "Holdings"
+  description: "Holdings API"
+- name: "ProviderAccounts"
+  description: "Provider Accounts API"
+- name: "Providers"
+  description: "Providers API"
+- name: "Refresh"
+  description: "Refresh API"
+- name: "Statements"
+  description: "Statements API"
+- name: "Transactions"
+  description: "Transactions API"
+- name: "User"
+  description: "Users API"
